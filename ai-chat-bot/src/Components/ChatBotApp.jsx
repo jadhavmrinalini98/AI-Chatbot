@@ -24,18 +24,26 @@ const ChatBotApp = ({onGoBack,chats,setChats,
             timestamp: new Date().toLocaleTimeString(),
 
         }
-        const updatedMessages =[...messages,newMessage]
-        setMessages(updatedMessages)
-        setInputValue('')
-
-
-        const updatedChats = chats.map((chat) => {
-            if(chat.id === activeChat){
-                return {...chat, messages: updatedMessages}
+        if (!activeChat){
+            onNewChat(inputValue)
+            setInputValue('')
         }
-        return chat
-        })
-        setChats(updatedChats)
+        else{
+            const updatedMessages =[...messages,newMessage]
+            setMessages(updatedMessages)
+            setInputValue('')
+    
+    
+            const updatedChats = chats.map((chat) => {
+                if(chat.id === activeChat){
+                    return {...chat, messages: updatedMessages}
+            }
+            return chat
+            })
+            setChats(updatedChats)
+
+        }
+       
     }
     const handleKeyDown = (e) =>{
         if(e.key ==="Enter"){
